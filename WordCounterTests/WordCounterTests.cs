@@ -7,7 +7,7 @@ namespace WordCounterTests
     public class WordCounterTests
     {
         [TestMethod]
-        public void Given_an_empty_file_will_return_list_of_empty_texts()
+        public void Given_an_unloaded_wordcounter_will_return_list_of_empty_texts()
         {
             //arrange
             var wordCounter = new WordCounter();
