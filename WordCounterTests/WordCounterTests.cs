@@ -102,5 +102,21 @@ namespace WordCounterTests
             Assert.AreEqual(expectedWord, result[expectedPosition-1].Word);
             Assert.AreEqual(expectedCount, result[expectedPosition-1].Count);
         }
+        //[TestMethod]
+        //public void WordCounter_to_show_Top_words_when_words_are_loaded_by_file()
+        //{
+        //    //arrange
+        //    var wordCounter = new WordCounter();
+        //    wordCounter.LoadFile(@"lord_of_the_rings.txt");
+        //    //act
+        //    var result = wordCounter.GetTop10Words();
+        //    //assert
+        //    CheckWordPositionAndCount(result, 1, "sample", 4);
+        //    CheckWordPositionAndCount(result, 2, "fox", 3);
+        //    CheckWordPositionAndCount(result, 3, "jumped", 1);
+
+        //}
+
+
     }
 }

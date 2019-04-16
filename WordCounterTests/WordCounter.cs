@@ -36,12 +36,12 @@ namespace WordCounterTests
         private static string OnlyAlphaNumericWords(string wordToCheck)
         {
             Regex r = new Regex("[^a-zA-Z0-9]");
-            return r.Replace(wordToCheck, "");
+            return r.Replace(wordToCheck, " ");
         }
 
         private static bool IsNotEmpty(string x)
         {
-            return !string.IsNullOrEmpty(x);
+            return !string.IsNullOrEmpty(x?.Trim());
         }
 
         private bool IsStringEmpty()
