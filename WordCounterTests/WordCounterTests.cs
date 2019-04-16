@@ -30,42 +30,17 @@ namespace WordCounterTests
 
         }
 
-
-        [TestMethod]
-        public void Given_a_wordcounter_loaded_with_1_word_will_return_list_of_text_containing_1_word()
-        {
-            //arrange
-            var wordCounter = GetWordCounter("sample");
-            //act
-            var result = wordCounter.GetTop10Words();
-            //assert
-            Assert.AreEqual(1, result.Length);
-        }
-
         [TestMethod]
         public void Given_a_wordcounter_loaded_with_1_word_will_return_list_of_text_containing_1_word_and_count_of_1()
         {
-            //arrange
-            var wordCounter = GetWordCounter("sample");
-            //act
-            var result = wordCounter.GetTop10Words();
-            //assert
-            Assert.AreEqual("sample", result[0].Word);
-            Assert.AreEqual(1, result[0].Count);
+            SingleWordCountVerification("sample", "sample", 1);
         }
 
         [TestMethod]
         public void Given_a_wordcounter_loaded_with_2_same_word_will_return_list_of_text_containing_1_word_and_count_of_2()
         {
-            //arrange
-            WordCounter wordCounter = GetWordCounter("sample sample");
-            //act
-            var result = wordCounter.GetTop10Words();
-            //assert
-            Assert.AreEqual("sample", result[0].Word);
-            Assert.AreEqual(2, result[0].Count);
+            SingleWordCountVerification("sample sample", "sample", 2);
         }
-
 
         [TestMethod]
         public void Given_a_wordcounter_loaded_with_2_same_word_And_1_different_word_will_return_list_of_text_containing_1_word_and_count_of_2_and_1()
@@ -84,25 +59,24 @@ namespace WordCounterTests
         [TestMethod]
         public void Given_a_wordcounter_loaded_with_word_has_leading_and_trailling_spaces_will_ignore_leading_and_empty_spaces()
         {
-            //arrange
-            var wordCounter = GetWordCounter("      sample     ");
-            //act
-            var result = wordCounter.GetTop10Words();
-            //assert
-            Assert.AreEqual("sample", result[0].Word);
-            Assert.AreEqual(1, result[0].Count);
+            SingleWordCountVerification("      sample     ", "sample", 1);
         }
 
         [TestMethod]
         public void Given_a_wordcounter_loaded_with_word_has_specialcharacters_will_specialcharacters()
         {
+            SingleWordCountVerification("sample .", "sample", 1);
+        }
+
+        private static void SingleWordCountVerification(string text, string expectedString, int expectedWordCount)
+        {
             //arrange
-            var wordCounter = GetWordCounter("sample .");
+            var wordCounter = GetWordCounter(text);
             //act
             var result = wordCounter.GetTop10Words();
             //assert
-            Assert.AreEqual("sample", result[0].Word);
-            Assert.AreEqual(1, result[0].Count);
+            Assert.AreEqual(expectedString, result[0].Word);
+            Assert.AreEqual(expectedWordCount, result[0].Count);
             Assert.AreEqual(1, result.Length);
         }
     }

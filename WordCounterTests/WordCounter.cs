@@ -23,11 +23,21 @@ namespace WordCounterTests
         private WordAndCount[] ProcessText()
         {
             var words = _textToProcess.Split(' ');
-            var wordList = words.Where(x=> !string.IsNullOrEmpty(x) && x != ".")
+
+            return words.Where(x => IsNotEmpty(x) && IsNotSpecialCharacter(x))
                 .GroupBy(word => word)
                 .Select(x => new WordAndCount(x.Key, x.Count()))
                 .ToArray();
-            return wordList;
+        }
+
+        private static bool IsNotSpecialCharacter(string x)
+        {
+            return x != ".";
+        }
+
+        private static bool IsNotEmpty(string x)
+        {
+            return !string.IsNullOrEmpty(x);
         }
 
         private bool IsStringEmpty()
