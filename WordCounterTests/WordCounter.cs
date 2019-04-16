@@ -29,6 +29,7 @@ namespace WordCounterTests
                 .Where(x => IsNotEmpty(x))
                 .GroupBy(word => word)
                 .Select(x => new WordAndCount(x.Key, x.Count()))
+                .OrderByDescending(wordAndCount=> wordAndCount.Count)
                 .ToArray();
         }
 

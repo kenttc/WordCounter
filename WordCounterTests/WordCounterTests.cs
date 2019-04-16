@@ -18,6 +18,18 @@ namespace WordCounterTests
             return wordCounter;
         }
 
+        private static void SingleWordCountVerification(string text, string expectedString, int expectedWordCount)
+        {
+            //arrange
+            var wordCounter = GetWordCounter(text);
+            //act
+            var result = wordCounter.GetTop10Words();
+            //assert
+            Assert.AreEqual(expectedString, result[0].Word);
+            Assert.AreEqual(expectedWordCount, result[0].Count);
+            Assert.AreEqual(1, result.Length);
+        }
+
         [TestMethod]
         public void Given_an_unloaded_wordcounter_will_return_list_of_empty_texts()
         {
@@ -70,16 +82,25 @@ namespace WordCounterTests
 
         }
 
-        private static void SingleWordCountVerification(string text, string expectedString, int expectedWordCount)
+
+        [TestMethod]
+        public void WordCounter_to_show_Top3_words_ordered_by_word_count()
         {
             //arrange
-            var wordCounter = GetWordCounter(text);
+            var wordCounter = GetWordCounter("fox sample sample fox sample jumped sample fox");
             //act
             var result = wordCounter.GetTop10Words();
             //assert
-            Assert.AreEqual(expectedString, result[0].Word);
-            Assert.AreEqual(expectedWordCount, result[0].Count);
-            Assert.AreEqual(1, result.Length);
+            Assert.AreEqual("sample", result[0].Word);
+            Assert.AreEqual(4, result[0].Count);
+            Assert.AreEqual("fox", result[1].Word);
+            Assert.AreEqual(3, result[1].Count);
+            Assert.AreEqual("jumped", result[2].Word);
+            Assert.AreEqual(1, result[2].Count);
+
         }
+
+
+
     }
 }
