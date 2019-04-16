@@ -44,7 +44,7 @@ namespace WordCounterTests
             var result = wordCounter.GetTop10Words();
             //assert
             Assert.AreEqual("sample", result[0].Word);
-            Assert.AreEqual(12, result[0].Count);
+            Assert.AreEqual(1, result[0].Count);
         }
 
 
