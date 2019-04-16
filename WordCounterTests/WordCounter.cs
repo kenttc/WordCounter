@@ -41,11 +41,12 @@ namespace WordCounterTests
 
         private WordAndCount[] ProcessWords(string[] words)
         {
-            return words.Select(x => OnlyAlphaNumericWords(x))
+            return words.Select(x => OnlyAlphaNumericWords(x.ToLowerInvariant()).Trim())
                .Where(x => IsNotEmpty(x))
                .GroupBy(word => word)
                .Select(x => new WordAndCount(x.Key, x.Count()))
-               .OrderByDescending(wordAndCount => wordAndCount.Count)
+               .OrderByDescending(word => word.Count).ThenByDescending(item => item.Word)
+               .Take(10)
                .ToArray();
         }
         private WordAndCount[] ProcessText()
@@ -101,7 +102,7 @@ namespace WordCounterTests
                 string line;
                 while ((line = streamReader.ReadLine()) != null)
                 {
-                    list.Add(line);
+                    list.AddRange(line.Split(' '));
                 }
             }
             return list.ToArray();
