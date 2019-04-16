@@ -17,5 +17,22 @@ namespace WordCounterTests
             Assert.AreEqual(0, result.Length);
 
         }
+
+
+        [TestMethod]
+        public void Given_a_wordcounter_loaded_with_1_word_will_return_list_of_text_containing_1_word()
+        {
+            //arrange
+            var wordCounter = new WordCounter();
+            var sampleText = "sample";
+            wordCounter.LoadText(sampleText);
+            //act
+            var result = wordCounter.GetTop10Words();
+            //assert
+            Assert.AreEqual(1, result.Length);
+
+        }
+
+
     }
 }
