@@ -63,9 +63,11 @@ namespace WordCounterTests
         }
 
         [TestMethod]
-        public void Given_a_wordcounter_loaded_with_word_has_specialcharacters_will_specialcharacters()
+        public void WordCounter_to_show_only_alphanumeric_characters()
         {
             SingleWordCountVerification("sample .", "sample", 1);
+            SingleWordCountVerification("sample %$£*&^", "sample", 1);
+
         }
 
         private static void SingleWordCountVerification(string text, string expectedString, int expectedWordCount)

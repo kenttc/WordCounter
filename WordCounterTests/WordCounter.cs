@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+
 namespace WordCounterTests
 {
     public class WordCounter
@@ -24,15 +25,17 @@ namespace WordCounterTests
         {
             var words = _textToProcess.Split(' ');
 
-            return words.Where(x => IsNotEmpty(x) && IsNotSpecialCharacter(x))
+            return words.Select(x => OnlyAlphaNumericWords(x))
+                .Where(x => IsNotEmpty(x))
                 .GroupBy(word => word)
                 .Select(x => new WordAndCount(x.Key, x.Count()))
                 .ToArray();
         }
 
-        private static bool IsNotSpecialCharacter(string x)
+        private static string OnlyAlphaNumericWords(string wordToCheck)
         {
-            return x != ".";
+            Regex r = new Regex("[^a-zA-Z0-9]");
+            return r.Replace(wordToCheck, "");
         }
 
         private static bool IsNotEmpty(string x)
