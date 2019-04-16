@@ -92,5 +92,18 @@ namespace WordCounterTests
             Assert.AreEqual("sample", result[0].Word);
             Assert.AreEqual(1, result[0].Count);
         }
+
+        [TestMethod]
+        public void Given_a_wordcounter_loaded_with_word_has_specialcharacters_will_specialcharacters()
+        {
+            //arrange
+            var wordCounter = GetWordCounter("sample .");
+            //act
+            var result = wordCounter.GetTop10Words();
+            //assert
+            Assert.AreEqual("sample", result[0].Word);
+            Assert.AreEqual(1, result[0].Count);
+            Assert.AreEqual(1, result.Length);
+        }
     }
 }
