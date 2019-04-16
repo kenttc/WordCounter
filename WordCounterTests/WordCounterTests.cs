@@ -34,18 +34,18 @@ namespace WordCounterTests
             Assert.AreEqual(1, result.Length);
         }
 
-        //[TestMethod]
-        //public void Given_a_wordcounter_loaded_with_1_word_will_return_list_of_text_containing_1_word_and_count_of_1()
-        //{
-        //    //arrange
-        //    var wordCounter = new WordCounter();
-        //    wordCounter.LoadText("sample");
-        //    //act
-        //    var result = wordCounter.GetTop10Words();
-        //    //assert
-        //    Assert.AreEqual("sample", result[0][0]);
-        //    Assert.AreEqual(12, result[0][1]);
-        //}
+        [TestMethod]
+        public void Given_a_wordcounter_loaded_with_1_word_will_return_list_of_text_containing_1_word_and_count_of_1()
+        {
+            //arrange
+            var wordCounter = new WordCounter();
+            wordCounter.LoadText("sample");
+            //act
+            var result = wordCounter.GetTop10Words();
+            //assert
+            Assert.AreEqual("sample", result[0].Word);
+            Assert.AreEqual(12, result[0].Count);
+        }
 
 
     }
