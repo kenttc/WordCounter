@@ -23,7 +23,7 @@ namespace WordCounterTests
         private WordAndCount[] ProcessText()
         {
             var words = _textToProcess.Split(' ');
-            var wordList = words.Where(x=> !string.IsNullOrEmpty(x))
+            var wordList = words.Where(x=> !string.IsNullOrEmpty(x) && x != ".")
                 .GroupBy(word => word)
                 .Select(x => new WordAndCount(x.Key, x.Count()))
                 .ToArray();
