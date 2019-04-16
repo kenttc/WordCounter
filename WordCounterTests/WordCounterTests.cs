@@ -62,5 +62,22 @@ namespace WordCounterTests
             Assert.AreEqual("sample", result[0].Word);
             Assert.AreEqual(2, result[0].Count);
         }
+
+        [TestMethod]
+        public void Given_a_wordcounter_loaded_with_2_same_word_And_1_different_word_will_return_list_of_text_containing_1_word_and_count_of_2_and_1()
+        {
+            //arrange
+            var wordCounter = new WordCounter();
+            wordCounter.LoadText("sample sample fox");
+            //act
+            var result = wordCounter.GetTop10Words();
+            //assert
+            Assert.AreEqual("sample", result[0].Word);
+            Assert.AreEqual(2, result[0].Count);
+            Assert.AreEqual("fox", result[1].Word);
+            Assert.AreEqual(1, result[1].Count);
+
+        }
+
     }
 }
