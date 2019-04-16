@@ -13,19 +13,25 @@ namespace WordCounterTests
 
         public WordAndCount[] GetTop10Words()
         {
-            if(_textToProcess == null)
-            {
+            if (IsStringEmpty())
                 return new WordAndCount[] { };
-            }
             else
-            {
-                var words = _textToProcess.Split(' ');
-                var wordList = words.GroupBy(word=>word)
-                    .Select(x => new WordAndCount(x.Key, x.Count()))
-                    .ToArray();
-                return wordList;
-            }
+                return ProcessText();
             
+        }
+
+        private WordAndCount[] ProcessText()
+        {
+            var words = _textToProcess.Split(' ');
+            var wordList = words.GroupBy(word => word)
+                .Select(x => new WordAndCount(x.Key, x.Count()))
+                .ToArray();
+            return wordList;
+        }
+
+        private bool IsStringEmpty()
+        {
+            return _textToProcess == null;
         }
 
         internal void LoadText(string sampleText)
