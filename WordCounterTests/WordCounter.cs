@@ -20,7 +20,9 @@ namespace WordCounterTests
             else
             {
                 var words = _textToProcess.Split(' ');
-                var wordList = words.Select(x => new WordAndCount(x, 1)).ToArray();
+                var wordList = words.GroupBy(word=>word)
+                    .Select(x => new WordAndCount(x.Key, x.Count()))
+                    .ToArray();
                 return wordList;
             }
             
