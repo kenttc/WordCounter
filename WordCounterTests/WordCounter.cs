@@ -12,9 +12,15 @@ namespace WordCounterTests
         
         private string _textToProcess;
         private string _fileToProcess;
+        private IFileLoader _fileLoader;
         public WordCounter()
         {
-            
+
+        }
+
+        public WordCounter(IFileLoader fileLoader)
+        {
+            _fileLoader = fileLoader;
         }
 
         public WordAndCount[] GetTop10Words()
@@ -30,19 +36,7 @@ namespace WordCounterTests
 
         private WordAndCount[] ProcessFile()
         {
-            string[] lines;
-            var list = new List<string>();
-            var fileStream = new FileStream(_fileToProcess, FileMode.Open, FileAccess.Read);
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-            {
-                string line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    list.Add(line);
-                }
-            }
-            lines = list.ToArray();
-            return ProcessWords(lines);
+            return ProcessWords(_fileLoader.GetWords(_fileToProcess));
         }
 
         private WordAndCount[] ProcessWords(string[] words)
@@ -88,7 +82,31 @@ namespace WordCounterTests
             _fileToProcess = filePath;
         }
     }
+    public interface IFileLoader
+    {
+        string[] GetWords(string filePath);
 
+    }
+
+    public class FileLoader : IFileLoader{
+
+        public string[] GetWords(string filePath)
+        {
+
+            string[] lines;
+            var list = new List<string>();
+            var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    list.Add(line);
+                }
+            }
+            return list.ToArray();
+        }
+    }
     public class WordAndCount
     {
 

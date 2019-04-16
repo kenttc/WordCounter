@@ -106,7 +106,7 @@ namespace WordCounterTests
         public void WordCounter_to_show_Top10_words_when_words_are_loaded_by_file_order_by_count_and_word_desc()
         {
             //arrange
-            var wordCounter = new WordCounter();
+            var wordCounter = new WordCounter(new FileLoader());
             string filepath = Environment.CurrentDirectory  + @"../../../lord_of_the_rings-sample.txt";
             wordCounter.LoadFile(filepath);
             //act
