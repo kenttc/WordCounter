@@ -91,16 +91,16 @@ namespace WordCounterTests
             //act
             var result = wordCounter.GetTop10Words();
             //assert
-            Assert.AreEqual("sample", result[0].Word);
-            Assert.AreEqual(4, result[0].Count);
-            Assert.AreEqual("fox", result[1].Word);
-            Assert.AreEqual(3, result[1].Count);
-            Assert.AreEqual("jumped", result[2].Word);
-            Assert.AreEqual(1, result[2].Count);
+            CheckWordPositionAndCount(result, 1, "sample", 4);
+            CheckWordPositionAndCount(result, 2, "fox", 3);
+            CheckWordPositionAndCount(result, 3, "jumped", 1);
 
         }
 
-
-
+        private static void CheckWordPositionAndCount(WordAndCount[] result, int expectedPosition, string expectedWord, int expectedCount)
+        {
+            Assert.AreEqual(expectedWord, result[expectedPosition-1].Word);
+            Assert.AreEqual(expectedCount, result[expectedPosition-1].Count);
+        }
     }
 }
