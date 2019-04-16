@@ -29,8 +29,7 @@ namespace WordCounterTests
         public void Given_a_wordcounter_loaded_with_1_word_will_return_list_of_text_containing_1_word()
         {
             //arrange
-            var wordCounter = new WordCounter();
-            wordCounter.LoadText("sample");
+            var wordCounter = GetWordCounter("sample");
             //act
             var result = wordCounter.GetTop10Words();
             //assert
@@ -41,8 +40,7 @@ namespace WordCounterTests
         public void Given_a_wordcounter_loaded_with_1_word_will_return_list_of_text_containing_1_word_and_count_of_1()
         {
             //arrange
-            var wordCounter = new WordCounter();
-            wordCounter.LoadText("sample");
+            var wordCounter = GetWordCounter("sample");
             //act
             var result = wordCounter.GetTop10Words();
             //assert
@@ -54,8 +52,7 @@ namespace WordCounterTests
         public void Given_a_wordcounter_loaded_with_2_same_word_will_return_list_of_text_containing_1_word_and_count_of_2()
         {
             //arrange
-            var wordCounter = new WordCounter();
-            wordCounter.LoadText("sample sample");
+            WordCounter wordCounter = GetWordCounter("sample sample");
             //act
             var result = wordCounter.GetTop10Words();
             //assert
@@ -63,12 +60,18 @@ namespace WordCounterTests
             Assert.AreEqual(2, result[0].Count);
         }
 
+        private static WordCounter GetWordCounter(string sampleText)
+        {
+            var wordCounter = new WordCounter();
+            wordCounter.LoadText(sampleText);
+            return wordCounter;
+        }
+
         [TestMethod]
         public void Given_a_wordcounter_loaded_with_2_same_word_And_1_different_word_will_return_list_of_text_containing_1_word_and_count_of_2_and_1()
         {
             //arrange
-            var wordCounter = new WordCounter();
-            wordCounter.LoadText("sample sample fox");
+            var wordCounter = GetWordCounter("sample sample fox");
             //act
             var result = wordCounter.GetTop10Words();
             //assert
@@ -76,7 +79,6 @@ namespace WordCounterTests
             Assert.AreEqual(2, result[0].Count);
             Assert.AreEqual("fox", result[1].Word);
             Assert.AreEqual(1, result[1].Count);
-
         }
 
     }
