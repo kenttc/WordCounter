@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace WordCounterTests
 {
@@ -7,6 +11,7 @@ namespace WordCounterTests
     {
         
         private string _textToProcess;
+        private string _fileToProcess;
         public WordCounter()
         {
             
@@ -14,23 +19,46 @@ namespace WordCounterTests
 
         public WordAndCount[] GetTop10Words()
         {
-            if (IsStringEmpty())
+            if (!string.IsNullOrEmpty(_fileToProcess))
+                return ProcessFile();
+            else if (IsStringEmpty())
                 return new WordAndCount[] { };
             else
                 return ProcessText();
             
         }
 
+        private WordAndCount[] ProcessFile()
+        {
+            string[] lines;
+            var list = new List<string>();
+            var fileStream = new FileStream(_fileToProcess, FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    list.Add(line);
+                }
+            }
+            lines = list.ToArray();
+            return ProcessWords(lines);
+        }
+
+        private WordAndCount[] ProcessWords(string[] words)
+        {
+            return words.Select(x => OnlyAlphaNumericWords(x))
+               .Where(x => IsNotEmpty(x))
+               .GroupBy(word => word)
+               .Select(x => new WordAndCount(x.Key, x.Count()))
+               .OrderByDescending(wordAndCount => wordAndCount.Count)
+               .ToArray();
+        }
         private WordAndCount[] ProcessText()
         {
             var words = _textToProcess.Split(' ');
 
-            return words.Select(x => OnlyAlphaNumericWords(x))
-                .Where(x => IsNotEmpty(x))
-                .GroupBy(word => word)
-                .Select(x => new WordAndCount(x.Key, x.Count()))
-                .OrderByDescending(wordAndCount=> wordAndCount.Count)
-                .ToArray();
+            return ProcessWords(words);
         }
 
         private static string OnlyAlphaNumericWords(string wordToCheck)
@@ -53,6 +81,11 @@ namespace WordCounterTests
         {
             _textToProcess = sampleText;
             
+        }
+
+        internal void LoadFile(string filePath)
+        {
+            _fileToProcess = filePath;
         }
     }
 

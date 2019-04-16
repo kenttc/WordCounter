@@ -102,20 +102,28 @@ namespace WordCounterTests
             Assert.AreEqual(expectedWord, result[expectedPosition-1].Word);
             Assert.AreEqual(expectedCount, result[expectedPosition-1].Count);
         }
-        //[TestMethod]
-        //public void WordCounter_to_show_Top_words_when_words_are_loaded_by_file()
-        //{
-        //    //arrange
-        //    var wordCounter = new WordCounter();
-        //    wordCounter.LoadFile(@"lord_of_the_rings.txt");
-        //    //act
-        //    var result = wordCounter.GetTop10Words();
-        //    //assert
-        //    CheckWordPositionAndCount(result, 1, "sample", 4);
-        //    CheckWordPositionAndCount(result, 2, "fox", 3);
-        //    CheckWordPositionAndCount(result, 3, "jumped", 1);
-
-        //}
+        [TestMethod]
+        public void WordCounter_to_show_Top10_words_when_words_are_loaded_by_file_order_by_count_and_word_desc()
+        {
+            //arrange
+            var wordCounter = new WordCounter();
+            string filepath = Environment.CurrentDirectory  + @"../../../lord_of_the_rings-sample.txt";
+            wordCounter.LoadFile(filepath);
+            //act
+            var result = wordCounter.GetTop10Words();
+            //assert
+            Assert.AreEqual(10, result.Length);
+            CheckWordPositionAndCount(result, 1, "the", 9);
+            CheckWordPositionAndCount(result, 2, "of", 7);
+            CheckWordPositionAndCount(result, 3, "shire", 2);
+            CheckWordPositionAndCount(result, 4, "ring", 2);
+            CheckWordPositionAndCount(result, 5, "r", 2);
+            CheckWordPositionAndCount(result, 6, "concerning", 2);
+            CheckWordPositionAndCount(result, 7, "weed", 1);
+            CheckWordPositionAndCount(result, 8, "v", 1);
+            CheckWordPositionAndCount(result, 9, "toikien", 1);
+            CheckWordPositionAndCount(result, 10, "table", 1);
+        }
 
 
     }
